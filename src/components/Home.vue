@@ -1,36 +1,19 @@
 <template>
     <div>
-        <navbar :user="user" :isLoggedIn="isLoggedIn"></navbar>
+        <navbar></navbar>
         <div class="main">
             <router-view></router-view>
         </div>
-        <!-- <notes-list v-if="isLoggedIn"></notes-list> -->
     </div>
 </template>
 
 <script>
 import Navbar from "./NavBar";
-import authService from "../services/auth.service";
 
 export default {
     name: "Home",
     components: {
         Navbar,
-    },
-    data() {
-        return {
-            user: {
-                username: ''
-            },
-            isLoggedIn: false
-        }
-    },
-    beforeMount() {
-        this.user = JSON.parse(localStorage.getItem('api-user')) || {username: ''};
-        if(!this.user){
-            this.$router.push({name: 'login'})
-        }
-        this.isLoggedIn = authService.isLoggedIn();
     },
 }
 </script>
@@ -118,7 +101,8 @@ form {
         float: right;
     }
 }
-.main{
+
+.main {
     padding-top: 50px;
 }
 </style>

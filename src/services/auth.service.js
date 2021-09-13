@@ -1,8 +1,14 @@
+import httpService from "./http.service";
 
 const authService = {
-    isLoggedIn() {
-        return !!localStorage.getItem('api-user');
-        // return false;
+    async isLoggedIn() {
+        const {data} = await httpService.get('is-logged-in');
+        console.log(data)
+        return data;
+    },
+    async getUser() {
+        const {data} = await httpService.get('get-user');
+        return data;
     }
 }
 

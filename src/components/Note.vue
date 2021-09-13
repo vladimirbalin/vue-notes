@@ -11,9 +11,11 @@
         <div class="tc-note-title" contenteditable="">
             {{ note.id }}
         </div>
-        <div v-if="note.errors" class="errors"
-             v-for="(error, field) in note.errors" :key="field">
-            <span>Not saved: </span><p>{{ error }}</p>
+        <div v-if="note.errors" class="errors-wrap">
+            <div class="errors"
+                 v-for="(error, field) in note.errors" :key="field">
+                <span>Not saved: </span><p>{{ error }}</p>
+            </div>
         </div>
         <div class="tc-note-body" contenteditable="" @blur="contentChanged">
             {{ note.content }}

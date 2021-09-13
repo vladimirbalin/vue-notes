@@ -37,14 +37,15 @@ export default {
         async login(e) {
             e.preventDefault();
             try {
-                const {data, status} = await httpService.post('login', this.form);
+                const {data} = await httpService.post('login', this.form);
                 const user = data.user;
-
-                const storageUser = JSON.stringify({'username': user.name, 'id': user.id});
+                await this.$store.dispatch('setUser', user);
+                const storageUser = JSON.stringify(user);
                 localStorage.setItem('api-user', storageUser);
                 localStorage.setItem('api-token', data.token);
 
-                this.$router.push({name: 'home'});
+
+                this.$router.push({name: 'notes'});
             } catch (err) {
                 this.errors = err.response.data.errors;
             }

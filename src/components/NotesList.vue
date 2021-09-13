@@ -55,7 +55,7 @@ export default {
         async addNote() {
             const newNote = {title: 'Title', content: 'Content', errors: []};
             const url = 'notes';
-            const {data, status} = await httpService.post(url, newNote);
+            const {data} = await httpService.post(url, newNote);
 
             this.notes = [data, ...this.notes];
         },

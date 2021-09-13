@@ -38,7 +38,7 @@ export default {
             e.preventDefault();
 
             try {
-                const {data, status} = await httpService.post('register', this.form);
+                const {status} = await httpService.post('register', this.form);
                 if (status === 200) {
                     this.$router.push({name: 'login'});
                 }
