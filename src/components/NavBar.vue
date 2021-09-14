@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import httpService from "../services/http.service";
 
 export default {
     name: "Navbar",
@@ -24,14 +23,13 @@ export default {
     methods: {
         async logout(e) {
             e.preventDefault();
-            const {status} = await httpService.delete('logout');
-            if (status === 200) {
-                localStorage.removeItem('api-token');
-                localStorage.removeItem('api-user');
+            
+            localStorage.removeItem('api-token');
+            localStorage.removeItem('api-user');
 
-                await this.$store.dispatch('logout');
-                this.$router.push({name: 'login'});
-            }
+            await this.$store.dispatch('logout');
+            this.$router.push({name: 'login'});
+        
         },
     },
 

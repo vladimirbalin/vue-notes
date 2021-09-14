@@ -26,7 +26,8 @@ export default {
     },
     async mounted() {
         const {data} = await httpService('notes');
-        this.notes = data.sort((a, b) => {
+        const notes = data.data;
+        this.notes = notes.sort((a, b) => {
             if (a.created_at > b.created_at) {
                 return -1;
             } else {
@@ -42,7 +43,7 @@ export default {
             try {
                 const url = 'notes/' + note.id;
                 const {data} = await httpService.put(url, note);
-                updatedNote = data;
+                updatedNote = data.data;
                 updatedNote.errors = [];
             } catch (e) {
                 updatedNote.errors = e.response.data.errors
@@ -57,7 +58,8 @@ export default {
             const url = 'notes';
             const {data} = await httpService.post(url, newNote);
 
-            this.notes = [data, ...this.notes];
+            const note = data.data;
+            this.notes = [note, ...this.notes];
         },
         async removeNote(note) {
             const url = 'notes/' + note.id;
