@@ -23,13 +23,8 @@ export default {
     methods: {
         async logout(e) {
             e.preventDefault();
-            
-            localStorage.removeItem('api-token');
-            localStorage.removeItem('api-user');
-
             await this.$store.dispatch('logout');
             this.$router.push({name: 'login'});
-        
         },
     },
 

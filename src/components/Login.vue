@@ -20,7 +20,6 @@
 
 <script>
 
-import httpService from "../services/http.service";
 
 export default {
     name: "Login",
@@ -37,14 +36,7 @@ export default {
         async login(e) {
             e.preventDefault();
             try {
-                const {data} = await httpService.post('login', this.form);
-                const user = data.user;
-                await this.$store.dispatch('setUser', user);
-                const storageUser = JSON.stringify(user);
-                localStorage.setItem('api-user', storageUser);
-                localStorage.setItem('api-token', data.token);
-
-
+                await this.$store.dispatch('login', this.form);
                 this.$router.push({name: 'notes'});
             } catch (err) {
                 this.errors = err.response.data.errors;

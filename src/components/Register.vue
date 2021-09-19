@@ -18,7 +18,9 @@
 </template>
 
 <script>
-import httpService from "../services/http.service";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 export default {
     name: "Register",
@@ -38,10 +40,8 @@ export default {
             e.preventDefault();
 
             try {
-                const {status} = await httpService.post('register', this.form);
-                if (status === 200) {
-                    this.$router.push({name: 'login'});
-                }
+                await this.$store.dispatch('register', this.form);
+                this.$router.push('login');
             } catch (err) {
                 this.errors = err.response.data.errors;
             }

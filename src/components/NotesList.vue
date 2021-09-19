@@ -25,7 +25,7 @@ export default {
         }
     },
     async mounted() {
-        const {data} = await httpService('notes');
+        const {data} = await httpService.get('notes');
         const notes = data.data;
         this.notes = notes.sort((a, b) => {
             if (a.created_at > b.created_at) {
