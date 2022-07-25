@@ -1,5 +1,6 @@
 module.exports={
     devServer:{
-        host: 'app.laravel-notes.local'
-    }
+        host: 'notes.local'
+    },
+    publicPath: ''
 }
