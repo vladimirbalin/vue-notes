@@ -121,17 +121,17 @@ export default {
     width: auto;
 }
 
-.tc-add-notes:hover,
-.tc-add-notes:focus {
+.tc-add-note:hover,
+.tc-add-note:focus {
   background-color: #277283;
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
-.tc-add-notes:hover {
+.tc-add-note:hover {
   transform: translateY(-1px);
 }
 
-.tc-add-notes:active {
+.tc-add-note:active {
   background-color: #2b7f91;
   box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
   transform: translateY(0);
