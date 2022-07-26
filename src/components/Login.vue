@@ -2,18 +2,20 @@
     <div class="form-wrapper">
         <h3>Login to create notes</h3>
         <form @submit.prevent="login" action="">
-            <small>please use <b>test/test </b>as username/password for testing on existing notes</small><br><br>
+            <p class="for-testing-purposes">please use <b class="colored">test/test</b> for testing purposes</p>
             <div v-if="errors" class="errors">
                 <p v-for="(error, field) in errors" :key="field">
                     {{ error }}
                 </p>
             </div>
-            <input type="text" v-model="form.username" placeholder="Your username"><br>
-            <div class="invalid-feedback">
+            <div class="inputs-wrapper">
+              <input type="text" v-model="form.username" placeholder="Your username"><br>
+              <div class="invalid-feedback">
 
+              </div>
+              <input type="password" v-model="form.password" placeholder="Your password"><br>
+              <button>Login</button>
             </div>
-            <input type="password" v-model="form.password" placeholder="Your password"><br>
-            <button>Login</button>
         </form>
     </div>
 </template>
@@ -47,5 +49,14 @@ export default {
 </script>
 
 <style scoped>
-
+  .for-testing-purposes{
+    text-align: center;
+    font-weight: 300;
+  }
+  .colored{
+    color: #ff6969;
+  }
+  .inputs-wrapper{
+    margin: .7rem;
+  }
 </style>

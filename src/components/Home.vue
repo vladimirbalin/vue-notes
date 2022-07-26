@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrapper">
         <navbar></navbar>
         <div class="main">
             <router-view></router-view>
@@ -19,7 +19,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+.wrapper,
+.main{
+  height: 100%;
+}
 .form-wrapper {
     background-color: white;
     padding: 20px;

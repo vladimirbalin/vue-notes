@@ -4,12 +4,14 @@ import Home from "./components/Home";
 import NotesList from "./components/NotesList";
 import VueRouter from "vue-router";
 import store from "./store";
+import Greetings from "@/components/Greetings";
 
 const routes = [
     {
         path: '/', component: Home,
         name: 'home',
         children: [
+            {path: '', component: Greetings, name: 'greetings'},
             {path: 'login', component: Login, name: 'login'},
             {path: 'register', component: Register, name: 'register'},
             {path: 'notes', component: NotesList, name: 'notes', meta: {requiresAuth: true}},

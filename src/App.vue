@@ -14,11 +14,13 @@
 html, body,
 #app {
     height: 100%;
+    width: 100%;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner&family=Roboto:wght@300;400&display=swap');
 #app {
     font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     background-color: #ececec;
 }
 .navbar {

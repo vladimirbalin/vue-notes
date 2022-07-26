@@ -8,9 +8,6 @@
         <div class="tc-note-title" contenteditable="" @blur="titleChanged">
             {{ note.title }}
         </div>
-        <div class="tc-note-title" contenteditable="">
-            {{ note.id }}
-        </div>
         <div v-if="note.errors" class="errors-wrap">
             <div class="errors"
                  v-for="(error, field) in note.errors" :key="field">
@@ -67,7 +64,7 @@ export default {
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
     cursor: pointer;
-    font-family: 'Caveat', cursive;
+    font-family: 'Edu VIC WA NT Beginner', cursive;
 
     .tc-note-header {
         padding: 10px 16px 0;
@@ -101,15 +98,14 @@ export default {
     }
 
     .tc-note-title {
-        font-size: 18px;
+        font-size: 32px;
         padding: 10px 16px;
         font-weight: bold;
     }
 
     .tc-note-body {
-        font-size: 16px;
+        font-size: 26px;
         padding: 10px 16px 16px;
-        height: 100%;
     }
 
     &:hover {
