@@ -16,7 +16,6 @@
 import Note from "./Note";
 import httpService from "../services/http.service";
 import {mapState} from "vuex";
-import authService from "@/services/auth.service";
 
 export default {
     name: "NotesList",
@@ -36,7 +35,8 @@ export default {
         } catch (err) {
             if (err.response.status === 419 ||
                 err.response.status === 401) {
-                await authService.logout();
+                await this.$store.dispatch('logout');
+                await this.$router.push('login');
             }
         }
         const notes = response.data.data;
