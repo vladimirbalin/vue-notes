@@ -15,10 +15,14 @@
 <script>
 import Note from "./Note";
 import httpService from "../services/http.service";
+import {mapState} from "vuex";
 
 export default {
     name: "NotesList",
     components: {Note},
+    computed: mapState({
+      userId: state => state.user.id,
+    }),
     data() {
         return {
             notes: []
@@ -54,7 +58,7 @@ export default {
             this.notes = [...begin, updatedNote, ...end];
         },
         async addNote() {
-            const newNote = {title: 'Title', content: 'Content', errors: []};
+            const newNote = {title: 'Title', content: 'Content', created_by: this.userId, errors: []};
             const url = 'notes';
             const {data} = await httpService.post(url, newNote);
 
