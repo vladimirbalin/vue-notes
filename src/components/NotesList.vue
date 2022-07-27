@@ -32,9 +32,9 @@ export default {
         let response;
         try {
             response = await httpService.get('notes');
-        } catch (err) {
-            if (err.response.status === 419 ||
-                err.response.status === 401) {
+        } catch ({response: {status}}) {
+            if (status === 419 ||
+                status === 401) {
                 await this.$store.dispatch('logout');
                 await this.$router.push('login');
             }
@@ -76,16 +76,18 @@ export default {
         },
         async removeNote(note) {
             const url = 'notes/' + note.id;
-            const {status} = await httpService.delete(url);
-
-            if (status === 202) {
-                const indexOf = this.notes.findIndex(el => el.id === note.id);
-                const begin = this.notes.slice(0, indexOf);
-                const end = this.notes.slice(indexOf + 1);
-                this.notes = [...begin, ...end];
-            }
-            if (status === 404) {
-                alert('noth happened');
+            try {
+                const {status} = await httpService.delete(url);
+                if (status === 202) {
+                    const indexOf = this.notes.findIndex(el => el.id === note.id);
+                    const begin = this.notes.slice(0, indexOf);
+                    const end = this.notes.slice(indexOf + 1);
+                    this.notes = [...begin, ...end];
+                }
+            } catch ({response: { status, data: { message } }}) {
+                if (status === 404) {
+                    console.log(message)
+                }
             }
         }
     }
@@ -116,7 +118,7 @@ export default {
     color: #fff;
     cursor: pointer;
     display: inline-flex;
-    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 600;
     justify-content: center;
@@ -136,17 +138,17 @@ export default {
 
 .tc-add-note:hover,
 .tc-add-note:focus {
-  background-color: #277283;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    background-color: #277283;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
 .tc-add-note:hover {
-  transform: translateY(-1px);
+    transform: translateY(-1px);
 }
 
 .tc-add-note:active {
-  background-color: #2b7f91;
-  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
-  transform: translateY(0);
+    background-color: #2b7f91;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
 }
 </style>
