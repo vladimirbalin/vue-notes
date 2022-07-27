@@ -16,12 +16,13 @@
 import Note from "./Note";
 import httpService from "../services/http.service";
 import {mapState} from "vuex";
+import authService from "@/services/auth.service";
 
 export default {
     name: "NotesList",
     components: {Note},
     computed: mapState({
-      userId: state => state.user.id,
+        userId: state => state.user.id,
     }),
     data() {
         return {
@@ -29,8 +30,16 @@ export default {
         }
     },
     async mounted() {
-        const {data} = await httpService.get('notes');
-        const notes = data.data;
+        let response;
+        try {
+            response = await httpService.get('notes');
+        } catch (err) {
+            if (err.response.status === 419 ||
+                err.response.status === 401) {
+                await authService.logout();
+            }
+        }
+        const notes = response.data.data;
         this.notes = notes.sort((a, b) => {
             if (a.created_at > b.created_at) {
                 return -1;

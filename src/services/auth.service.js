@@ -15,13 +15,21 @@ const authService = {
         return user;
     },
     async logout(){
-        await csrf.getCookie();
-        await httpService.delete('logout');
-        localStorage.removeItem('api-user');
+        try {
+            await csrf.getCookie();
+            await httpService.delete('logout');
+        } catch (err){
+            console.log(err);
+        }
+        removeUserFromStorage();
     },
     async register(credentials){
         await httpService.post('register', credentials);
     }
+}
+
+function removeUserFromStorage() {
+    localStorage.removeItem('api-user');
 }
 
 export default authService;

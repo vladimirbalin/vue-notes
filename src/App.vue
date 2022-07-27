@@ -14,6 +14,7 @@
 html, body,
 #app {
     min-height: 100vh;
+    height: 100%;
     width: 100%;
 }
 
@@ -23,6 +24,7 @@ html, body,
     font-weight: 400;
     background-color: #ececec;
 }
+
 .navbar {
     height: 50px;
     position: fixed;
