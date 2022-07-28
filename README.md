@@ -1,12 +1,12 @@
 # Notes app
 
-Notes application, written on Vuejs connected to [REST api on Laravel](https://github.com/vladimirbalin/laravel-notes)
+Notes application, written on VueJS connected to [REST api on Laravel](https://github.com/vladimirbalin/laravel-notes)
 
 
 
-## Installation and deployment
+## Installation and deployment/development
 
-1. Install all dependencies and build to 'dist' folder:
+1. Install all dependencies:
 
 ```
 npm i
@@ -23,7 +23,7 @@ VUE_APP_API_DOMAIN=
 ```
 npm run build
 ```
-3. Or to run app in development mode:
+3. Or run app in development mode:
  ```
 npm run serve
  ```
@@ -33,10 +33,11 @@ npm run serve
 
 - Login and registration, logout
 - Adding new, updating and deleting notes
-
+- Redirecting to login page, if not authenticated
 
 ## Tech stack used
 
 - VueJS (Vue router, Vuex)
-- HTML, CSS (SCSS), Axios
-- Vanilla js with things like: async/await, interaction with localstorage
+- HTML, CSS (SCSS)
+- Axios
+- Vanilla js with things like: async/await, interaction with local storage
