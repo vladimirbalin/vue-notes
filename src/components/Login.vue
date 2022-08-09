@@ -2,7 +2,6 @@
     <div class="form-wrapper">
         <h3>Login to create notes</h3>
         <form @submit.prevent="login" action="">
-            <p class="for-testing-purposes">please use <b class="colored">test/test</b> for testing purposes</p>
             <div v-if="errors" class="errors">
                 <p v-for="(error, field) in errors" :key="field">
                     {{ error }}
@@ -14,9 +13,10 @@
 
               </div>
               <input type="password" v-model="form.password" placeholder="Your password"><br>
-              <button>Login</button>
+                <button type="submit">Login</button>
             </div>
         </form>
+        <button class="test-credentials" @click="fillTheForm">Fill the form with test credentials</button>
     </div>
 </template>
 
@@ -43,20 +43,34 @@ export default {
             } catch (err) {
                 this.errors = err.response.data.errors;
             }
+        },
+        fillTheForm(){
+            this.form.username = this.form.password ='test';
         }
     }
 }
 </script>
 
-<style scoped>
-  .for-testing-purposes{
-    text-align: center;
-    font-weight: 300;
-  }
+<style scoped lang="scss">
   .colored{
     color: #ff6969;
   }
   .inputs-wrapper{
     margin: .7rem;
+  }
+  button.test-credentials{
+      display: block;
+      margin: 0 auto;
+      outline: 0;
+      cursor: pointer;
+      border: 1px solid darken(#e36c77, 5%);
+      background-color: #ef5d73;
+      color: white;
+      padding: 6px 12px;
+      transition: all 0.3s;
+
+      &:hover {
+           background-color: darken(#e36c77, 10%);
+       }
   }
 </style>
