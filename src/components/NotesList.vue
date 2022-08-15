@@ -4,9 +4,7 @@
         <div class="tc-notes">
             <note v-for="(note, index) in notes"
                   :key="index"
-                  :note="note"
-                  @updateNote="updateNote"
-                  @removeNote="removeNote"/>
+                  :note="note"/>
         </div>
     </div>
 
@@ -14,82 +12,24 @@
 
 <script>
 import Note from "./Note";
-import httpService from "../services/http.service";
-import {mapState} from "vuex";
+import {FETCH_NOTES} from "@/store/actions.type";
+import {mapGetters} from "vuex";
 
 export default {
     name: "NotesList",
     components: {Note},
-    computed: mapState({
-        userId: state => state.user.id,
-    }),
-    data() {
-        return {
-            notes: []
-        }
+    computed: {
+        ...mapGetters([
+            'notes'
+        ])
     },
-    async mounted() {
-        let response;
-        try {
-            response = await httpService.get('notes');
-        } catch ({response: {status}}) {
-            if (status === 419 ||
-                status === 401) {
-                await this.$store.dispatch('logout');
-                await this.$router.push('login');
-            }
-        }
-        const notes = response.data.data;
-        this.notes = notes.sort((a, b) => {
-            if (a.created_at > b.created_at) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
+    mounted() {
+        this.$store.dispatch(FETCH_NOTES);
     },
     methods: {
-        async updateNote(note) {
-            const indexOf = this.notes.findIndex(el => el.id === note.id);
-            let updatedNote = this.notes[indexOf];
-
-            try {
-                const url = 'notes/' + note.id;
-                const {data} = await httpService.put(url, note);
-                updatedNote = data.data;
-                updatedNote.errors = [];
-            } catch (e) {
-                updatedNote.errors = e.response.data.errors
-            }
-
-            const begin = this.notes.slice(0, indexOf);
-            const end = this.notes.slice(indexOf + 1);
-            this.notes = [...begin, updatedNote, ...end];
+        addNote() {
+            this.$store.dispatch('addNote');
         },
-        async addNote() {
-            const newNote = {title: 'Title', content: 'Content', created_by: this.userId, errors: []};
-            const url = 'notes';
-            const {data} = await httpService.post(url, newNote);
-
-            const note = data.data;
-            this.notes = [note, ...this.notes];
-        },
-        async removeNote(note) {
-            const url = 'notes/' + note.id;
-            try {
-                const {status} = await httpService.delete(url);
-                if (status === 202) {
-                    const indexOf = this.notes.findIndex(el => el.id === note.id);
-                    const begin = this.notes.slice(0, indexOf);
-                    const end = this.notes.slice(indexOf + 1);
-                    this.notes = [...begin, ...end];
-                }
-            } catch ({response: { status, data: { message } }}) {
-                if (status === 404) {
-                    console.log(message)
-                }
-            }
-        }
     }
 }
 </script>

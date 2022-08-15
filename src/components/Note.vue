@@ -1,7 +1,7 @@
 <template>
     <div class="tc-note">
         <div class="tc-note-header">
-                <span @click="deleteNote" class="tc-note-close">
+                <span @click="removeNote" class="tc-note-close">
                     <i class="fas fa-times">X</i>
                 </span>
         </div>
@@ -11,7 +11,8 @@
         <div v-if="note.errors" class="errors-wrap">
             <div class="errors"
                  v-for="(error, field) in note.errors" :key="field">
-                <span>Not saved: </span><p>{{ error }}</p>
+                <span>Not saved: </span>
+                <p>{{ error }}</p>
             </div>
         </div>
         <div class="tc-note-body" contenteditable="" @blur="contentChanged">
@@ -30,16 +31,16 @@ export default {
         }
     },
     methods: {
-        deleteNote() {
-            this.$emit('removeNote', this.note)
+        async removeNote() {
+            await this.$store.dispatch('removeNote', this.note);
         },
-        titleChanged(event) {
+        async titleChanged(event) {
             this.note.title = event.target.innerText
-            this.$emit('updateNote', this.note)
+            await this.$store.dispatch('updateNote', this.note)
         },
-        contentChanged(event) {
+        async contentChanged(event) {
             this.note.content = event.target.innerText
-            this.$emit('updateNote', this.note)
+            await this.$store.dispatch('updateNote', this.note)
         }
     },
     mounted() {
@@ -64,7 +65,7 @@ export default {
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
     cursor: pointer;
-    font-family: 'Edu VIC WA NT Beginner', cursive;
+    font-family: 'Abel', sans-serif;
 
     .tc-note-header {
         padding: 10px 16px 0;

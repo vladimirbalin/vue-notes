@@ -17,7 +17,7 @@ html, body,
     width: 100%;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner&family=Roboto:wght@300;400&display=swap');
+@import url(https://fonts.bunny.net/css?family=abel:400|roboto:300,400);
 #app {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
