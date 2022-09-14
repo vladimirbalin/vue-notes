@@ -8,7 +8,7 @@
                 </p>
             </div>
             <div class="inputs-wrapper">
-              <input type="text" v-model="form.username" placeholder="Your username"><br>
+              <input type="text" v-model="form.name" placeholder="Your username"><br>
               <div class="invalid-feedback">
 
               </div>
@@ -28,7 +28,7 @@ export default {
     data() {
         return {
             form: {
-                username: '',
+                name: '',
                 password: ''
             },
             errors: null,
@@ -45,7 +45,7 @@ export default {
             }
         },
         fillTheForm(){
-            this.form.username = this.form.password ='test';
+            this.form.name = this.form.password ='test';
         }
     }
 }
