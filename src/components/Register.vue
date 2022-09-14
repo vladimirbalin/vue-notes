@@ -7,7 +7,7 @@
                     {{ error }}
                 </p>
             </div>
-            <input type="text" v-model="form.username" placeholder="Your username"><br>
+            <input type="text" v-model="form.name" placeholder="Your name"><br>
             <input type="text" v-model="form.email" placeholder="Your email"><br>
             <input type="password" v-model="form.password" placeholder="Your password"><br>
             <input type="password" v-model="form.password_confirmation" placeholder="Repeat password"><br>
@@ -27,7 +27,7 @@ export default {
     data() {
         return {
             form: {
-                username: '',
+                name: '',
                 email: '',
                 password: '',
                 password_confirmation: ''
