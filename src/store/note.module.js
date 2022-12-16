@@ -47,7 +47,7 @@ const actions = {
         const url = 'notes/' + note.id;
         try {
             const {status} = await httpService.delete(url);
-            if (status === 202) {
+            if (status === 200) {
                 const notes = state.notes;
 
                 const indexOf = notes.findIndex(el => el.id === note.id);
