@@ -2,10 +2,10 @@
     <div class="tc-note">
         <div class="tc-note-header">
                 <span @click="removeNote" class="tc-note-close">
-                    <i class="fas fa-times">X</i>
+                    <span class="tc-note-delete">X</span>
                 </span>
         </div>
-        <div class="tc-note-title" contenteditable="" @blur="titleChanged">
+        <div ref="title" class="tc-note-title" contenteditable="" @blur="titleChanged">
             {{ note.title }}
         </div>
         <div v-if="note.errors" class="errors-wrap">
@@ -15,7 +15,7 @@
                 <p>{{ error }}</p>
             </div>
         </div>
-        <div class="tc-note-body" contenteditable="" @blur="contentChanged">
+        <div ref="content" class="tc-note-body" contenteditable="" @blur="contentChanged">
             {{ note.content }}
         </div>
     </div>
@@ -58,13 +58,12 @@ export default {
 }
 
 .tc-note {
-    background-color: #f0c806;
-    border-radius: 8px;
+    background-color: #D7D7D7;
+    border: solid 1px #575757;
     width: 280px;
     margin: 0 10px 20px;
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
-    cursor: pointer;
     font-family: 'Abel', sans-serif;
 
     .tc-note-header {
@@ -74,9 +73,12 @@ export default {
             display: inline-block;
             width: 24px;
             height: 24px;
+            font-size: 24px;
+            color: #808c7b;
             border-radius: 50%;
             line-height: 24px;
             text-align: center;
+            cursor: pointer;
             transition: all 0.3s;
 
             &:hover {

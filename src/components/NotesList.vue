@@ -1,6 +1,6 @@
 <template>
     <div class="tc-notes-wrapper">
-        <button class="tc-add-note" @click="addNote">Add note</button>
+        <button class="tc-add-note" @click="addNote">Add new</button>
         <div class="tc-notes">
             <note v-for="(note, index) in notes"
                   :key="index"
@@ -27,8 +27,9 @@ export default {
         this.$store.dispatch(FETCH_NOTES);
     },
     methods: {
-        addNote() {
-            this.$store.dispatch('addNote');
+        async addNote() {
+            await this.$store.dispatch('addNote');
+            this.$children[0].$refs.title.focus()
         },
     }
 }
@@ -50,12 +51,10 @@ export default {
 .tc-add-note {
     align-items: center;
     background-clip: padding-box;
-    background-color: #1f5d6b;
+    background-color: #D7D7D7;
     border: 1px solid transparent;
-    border-radius: .25rem;
     box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
     box-sizing: border-box;
-    color: #fff;
     cursor: pointer;
     display: inline-flex;
     font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -63,10 +62,10 @@ export default {
     font-weight: 600;
     justify-content: center;
     line-height: 1.25;
-    margin: 0;
     min-height: 3rem;
     padding: calc(.875rem - 1px) calc(1.5rem - 1px);
     position: relative;
+    text-transform: uppercase;
     text-decoration: none;
     transition: all 250ms;
     user-select: none;
@@ -78,8 +77,7 @@ export default {
 
 .tc-add-note:hover,
 .tc-add-note:focus {
-    background-color: #277283;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    border: 1px solid black;
 }
 
 .tc-add-note:hover {
@@ -87,7 +85,7 @@ export default {
 }
 
 .tc-add-note:active {
-    background-color: #2b7f91;
+    background-color: #0c2023;
     box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
     transform: translateY(0);
 }

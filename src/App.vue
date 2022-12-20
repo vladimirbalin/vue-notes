@@ -24,24 +24,6 @@ html, body,
     background-color: #ececec;
 }
 
-.navbar {
-    height: 50px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    line-height: 50px;
-    background-color: #1f5d6b;
-    color: #fff;
-    padding: 0 15px;
-    text-align: center;
-    transition: font-weight 0.3s;
-
-    a {
-        color: #fff;
-    }
-
-}
 </style>
 
 <script>

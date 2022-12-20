@@ -76,14 +76,13 @@ form {
     button {
         outline: 0;
         cursor: pointer;
-        border: 1px solid darken(#4fb2c1, 5%);
-        background-color: #4fb2c1;
-        color: white;
+        border: 1px solid darken(#D7D7D7, 5%);
+        background-color: #D7D7D7;
         padding: 6px 12px;
         transition: all 0.3s;
 
         &:hover {
-            background-color: darken(#4fb2c1, 10%);
+            background-color: darken(#D7D7D7, 10%);
         }
     }
 

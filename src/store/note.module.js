@@ -6,6 +6,7 @@ import {
     ADD_NOTE,
     UPDATE_NOTE
 } from './actions.type';
+import authService from "@/services/auth.service";
 
 const state = {
     notes: []
@@ -19,8 +20,7 @@ const actions = {
         } catch ({response: {status}}) {
             if (status === 419 ||
                 status === 401) {
-                await this.$store.dispatch('logout');
-                await this.$router.push('login');
+                await authService.logout();
             }
         }
         let notes = response.data.data;
