@@ -14,6 +14,7 @@
 import Note from "./Note";
 import {FETCH_NOTES} from "@/store/actions.type";
 import {mapGetters} from "vuex";
+import _ from "lodash";
 
 export default {
     name: "NotesList",
@@ -27,11 +28,12 @@ export default {
         this.$store.dispatch(FETCH_NOTES);
     },
     methods: {
-        async addNote() {
-            await this.$store.dispatch('addNote');
-            this.lastAddedNote().$refs.title.focus()
-        },
-        lastAddedNote(){
+        addNote: _.throttle(async function () {
+                await this.$store.dispatch('addNote');
+                this.lastAddedNote().$refs.title.focus()
+            }, 1000
+        ),
+        lastAddedNote() {
             return this.$children.at(-1);
         }
     }
