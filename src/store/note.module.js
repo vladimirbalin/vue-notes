@@ -35,7 +35,7 @@ const actions = {
         commit(SET_NOTES, notes);
     },
     async [ADD_NOTE]({state, commit, getters}) {
-        const newNote = {title: 'New title', content: 'New content', created_by: getters.getUser.id};
+        const newNote = {title: '', content: '', created_by: getters.getUser.id};
         const url = 'notes';
         const {data} = await httpService.post(url, newNote);
 

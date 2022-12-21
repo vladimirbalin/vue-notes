@@ -45,6 +45,7 @@ export default {
     padding: 0 15px;
     text-align: center;
     transition: font-weight 0.3s;
+    z-index: 100;
 
     a {
         color: #727373;

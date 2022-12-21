@@ -5,7 +5,15 @@
                     <span class="tc-note-delete">X</span>
                 </span>
         </div>
-        <div ref="title" class="tc-note-title" contenteditable="" @blur="titleChanged">
+        <div v-if="titlePlaceholderComputed"
+             class="tc-note-title placeholder">
+            Введите заголовок
+        </div>
+        <div ref="title" class="tc-note-title"
+             contenteditable=""
+             @focusin="placeholderOff('title')"
+             @focusout="placeholderOn('title')"
+             @blur="titleChanged">
             {{ note.title }}
         </div>
         <div v-if="note.errors" class="errors-wrap">
@@ -15,7 +23,15 @@
                 <p>{{ error }}</p>
             </div>
         </div>
-        <div ref="content" class="tc-note-body" contenteditable="" @blur="contentChanged">
+        <div v-if="contentPlaceholderComputed"
+             class="tc-note-body placeholder">
+            Текст заметки
+        </div>
+        <div ref="content" class="tc-note-body"
+             contenteditable=""
+             @focusin="placeholderOff('content')"
+             @focusout="placeholderOn('content')"
+             @blur="contentChanged">
             {{ note.content }}
         </div>
     </div>
@@ -30,6 +46,12 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            titlePlaceholder: false,
+            contentPlaceholder: false,
+        }
+    },
     methods: {
         async removeNote() {
             await this.$store.dispatch('removeNote', this.note);
@@ -41,9 +63,43 @@ export default {
         async contentChanged(event) {
             this.note.content = event.target.innerText
             await this.$store.dispatch('updateNote', this.note)
-        }
+        },
+        placeholderOn(type) {
+            if (type === 'title') {
+                if (!this.note.title) {
+                    this.titlePlaceholder = true;
+                }
+            }
+            if (type === 'content') {
+                if (!this.note.content) {
+                    this.contentPlaceholder = true;
+                }
+            }
+        },
+        placeholderOff(type) {
+            if (type === 'title') {
+                    this.titlePlaceholder = false;
+            }
+            if (type === 'content') {
+                    this.contentPlaceholder = false;
+            }
+        },
     },
     mounted() {
+        if (!this.note.title) {
+            this.titlePlaceholder = true;
+        }
+        if (!this.note.content) {
+            this.contentPlaceholder = true;
+        }
+    },
+    computed: {
+        titlePlaceholderComputed() {
+            return this.titlePlaceholder;
+        },
+        contentPlaceholderComputed() {
+            return this.contentPlaceholder;
+        }
     }
 }
 </script>
@@ -65,6 +121,7 @@ export default {
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
     font-family: 'Abel', sans-serif;
+    z-index: 1;
 
     .tc-note-header {
         padding: 10px 16px 0;
@@ -104,6 +161,14 @@ export default {
         font-size: 32px;
         padding: 10px 16px;
         font-weight: bold;
+    }
+
+    .tc-note-title.placeholder,
+    .tc-note-body.placeholder {
+        position: absolute;
+        font-size: 24px;
+        color: #a3b09e;
+        z-index: -1;
     }
 
     .tc-note-body {

@@ -2,8 +2,8 @@
     <div class="tc-notes-wrapper">
         <button class="tc-add-note" @click="addNote">Add new</button>
         <div class="tc-notes">
-            <note v-for="(note, index) in notes"
-                  :key="index"
+            <note v-for="(note) in notes"
+                  :key="note.id"
                   :note="note"/>
         </div>
     </div>
@@ -29,8 +29,11 @@ export default {
     methods: {
         async addNote() {
             await this.$store.dispatch('addNote');
-            this.$children[0].$refs.title.focus()
+            this.lastAddedNote().$refs.title.focus()
         },
+        lastAddedNote(){
+            return this.$children.at(-1);
+        }
     }
 }
 </script>
