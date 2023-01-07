@@ -7,7 +7,7 @@
         </div>
         <div v-if="titlePlaceholderComputed"
              class="tc-note-title placeholder">
-            Введите заголовок
+            Enter title
         </div>
         <div ref="title" class="tc-note-title"
              contenteditable=""
@@ -25,7 +25,7 @@
         </div>
         <div v-if="contentPlaceholderComputed"
              class="tc-note-body placeholder">
-            Текст заметки
+            Text of the note
         </div>
         <div ref="content" class="tc-note-body"
              contenteditable=""
