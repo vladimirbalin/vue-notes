@@ -1,0 +1,13 @@
+on:
+  push:
+    tags:
+      - '!refs/tags/*'
+    branches:
+      - '*'
+jobs:
+  pull_and_build:
+    runs-on: self-hosted
+    steps:
+      - name: Install requirements
+        run: systemctl stop mysql && git pull && npm install && npm run build && systemctl start mysql
+        working-directory: /var/www/notes/
