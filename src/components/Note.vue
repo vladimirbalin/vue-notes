@@ -14,7 +14,14 @@
              @focusin="placeholderOff('title')"
              @focusout="placeholderOn('title')"
              @blur="titleChanged">
-            {{ note.title }}
+            {{ title }}
+        </div>
+        <div v-if="note.errors" class="errors-wrap">
+            <div class="errors"
+                 v-for="(error, field) in note.errors" :key="field">
+                <span>Not saved: </span>
+                <p>{{ error }}</p>
+            </div>
         </div>
         <div v-if="note.errors" class="errors-wrap">
             <div class="errors"
@@ -32,7 +39,7 @@
              @focusin="placeholderOff('content')"
              @focusout="placeholderOn('content')"
              @blur="contentChanged">
-            {{ note.content }}
+            {{ content }}
         </div>
     </div>
 </template>
@@ -48,6 +55,8 @@ export default {
     },
     data() {
         return {
+            title: "",
+            content: "",
             titlePlaceholder: false,
             contentPlaceholder: false,
         }
@@ -56,32 +65,32 @@ export default {
         async removeNote() {
             await this.$store.dispatch('removeNote', this.note);
         },
-        async titleChanged(event) {
-            this.note.title = event.target.innerText
-            await this.$store.dispatch('updateNote', this.note)
+        titleChanged(event) {
+            this.note.title = event.target.innerHTML
+            this.$store.dispatch('updateNote', this.note)
         },
-        async contentChanged(event) {
-            this.note.content = event.target.innerText
-            await this.$store.dispatch('updateNote', this.note)
+        contentChanged(event) {
+            this.note.content = event.target.innerHTML
+            this.$store.dispatch('updateNote', this.note)
         },
         placeholderOn(type) {
-            if (type === 'title') {
-                if (!this.note.title) {
-                    this.titlePlaceholder = true;
-                }
-            }
-            if (type === 'content') {
-                if (!this.note.content) {
-                    this.contentPlaceholder = true;
-                }
+            if (
+                type === 'title' &&
+                !this.note.title
+            ) {
+                this.titlePlaceholder = true;
+            } else if (
+                type === 'content' &&
+                !this.note.content
+            ) {
+                this.contentPlaceholder = true;
             }
         },
         placeholderOff(type) {
             if (type === 'title') {
-                    this.titlePlaceholder = false;
-            }
-            if (type === 'content') {
-                    this.contentPlaceholder = false;
+                this.titlePlaceholder = false;
+            } else if (type === 'content') {
+                this.contentPlaceholder = false;
             }
         },
     },
@@ -92,6 +101,9 @@ export default {
         if (!this.note.content) {
             this.contentPlaceholder = true;
         }
+
+        this.title = this.note.title
+        this.content = this.note.content
     },
     computed: {
         titlePlaceholderComputed() {
