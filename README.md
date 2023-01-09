@@ -1,8 +1,6 @@
-# Notes app
+# [Notes application](https://notes.vladimirbalin.ru/login)
 
-Notes application, written on VueJS connected to [REST api on Laravel](https://github.com/vladimirbalin/laravel-notes)
-
-
+Written on Vue.js, sends requests to [REST api on Laravel](https://github.com/vladimirbalin/laravel-notes)
 
 ## Installation and deployment/development
 
