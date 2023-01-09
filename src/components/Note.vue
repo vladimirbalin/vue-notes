@@ -5,7 +5,18 @@
                     <span class="tc-note-delete">X</span>
                 </span>
         </div>
-        <div v-if="titlePlaceholderComputed"
+
+        <!--    errors    -->
+        <div v-if="initialNote.errors" class="errors-wrap">
+            <div class="errors"
+                 v-for="(error, field) in initialNote.errors" :key="field">
+                <span>Not saved: </span>
+                <p>{{ error }}</p>
+            </div>
+        </div>
+
+        <!--   title     -->
+        <div v-if="titlePlaceholder"
              class="tc-note-title placeholder">
             Enter title
         </div>
@@ -13,24 +24,12 @@
              contenteditable=""
              @focusin="placeholderOff('title')"
              @focusout="placeholderOn('title')"
-             @blur="titleChanged">
-            {{ title }}
+             @blur="titleChanged"
+             v-text="note.title">
         </div>
-        <div v-if="note.errors" class="errors-wrap">
-            <div class="errors"
-                 v-for="(error, field) in note.errors" :key="field">
-                <span>Not saved: </span>
-                <p>{{ error }}</p>
-            </div>
-        </div>
-        <div v-if="note.errors" class="errors-wrap">
-            <div class="errors"
-                 v-for="(error, field) in note.errors" :key="field">
-                <span>Not saved: </span>
-                <p>{{ error }}</p>
-            </div>
-        </div>
-        <div v-if="contentPlaceholderComputed"
+
+        <!--   content     -->
+        <div v-if="contentPlaceholder"
              class="tc-note-body placeholder">
             Text of the note
         </div>
@@ -38,8 +37,8 @@
              contenteditable=""
              @focusin="placeholderOff('content')"
              @focusout="placeholderOn('content')"
-             @blur="contentChanged">
-            {{ content }}
+             @blur="contentChanged"
+             v-text="note.content">
         </div>
     </div>
 </template>
@@ -48,17 +47,16 @@
 export default {
     name: "Note",
     props: {
-        note: {
+        initialNote: {
             type: Object,
             required: true
         }
     },
     data() {
         return {
-            title: "",
-            content: "",
-            titlePlaceholder: false,
-            contentPlaceholder: false,
+            note: this.initialNote,
+            titlePlaceholder: !this.initialNote.title,
+            contentPlaceholder: !this.initialNote.content,
         }
     },
     methods: {
@@ -66,11 +64,11 @@ export default {
             await this.$store.dispatch('removeNote', this.note);
         },
         titleChanged(event) {
-            this.note.title = event.target.innerHTML
+            this.note.title = event.target.innerText
             this.$store.dispatch('updateNote', this.note)
         },
         contentChanged(event) {
-            this.note.content = event.target.innerHTML
+            this.note.content = event.target.innerText
             this.$store.dispatch('updateNote', this.note)
         },
         placeholderOn(type) {
@@ -79,17 +77,20 @@ export default {
                 !this.note.title
             ) {
                 this.titlePlaceholder = true;
-            } else if (
+            }
+
+            if (
                 type === 'content' &&
-                !this.note.content
-            ) {
+                !this.note.content) {
                 this.contentPlaceholder = true;
             }
         },
         placeholderOff(type) {
             if (type === 'title') {
                 this.titlePlaceholder = false;
-            } else if (type === 'content') {
+            }
+
+            if (type === 'content') {
                 this.contentPlaceholder = false;
             }
         },
@@ -105,14 +106,6 @@ export default {
         this.title = this.note.title
         this.content = this.note.content
     },
-    computed: {
-        titlePlaceholderComputed() {
-            return this.titlePlaceholder;
-        },
-        contentPlaceholderComputed() {
-            return this.contentPlaceholder;
-        }
-    }
 }
 </script>
 

@@ -4,7 +4,7 @@
         <div class="tc-notes">
             <note v-for="(note) in notes"
                   :key="note.id"
-                  :note="note"/>
+                  :initialNote="note"/>
         </div>
     </div>
 
