@@ -6,7 +6,6 @@ import {
     ADD_NOTE,
     UPDATE_NOTE
 } from './actions.type';
-import authService from "@/services/auth.service";
 
 const state = {
     notes: []
@@ -17,11 +16,8 @@ const actions = {
         let response;
         try {
             response = await httpService.get('notes');
-        } catch ({response: {status}}) {
-            if (status === 419 ||
-                status === 401) {
-                await authService.logout();
-            }
+        } catch (error) {
+            console.log(error)
         }
         let notes = response.data.data;
         notes = notes.sort((a, b) => {
