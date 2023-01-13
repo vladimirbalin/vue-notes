@@ -1,9 +1,9 @@
 <template>
     <div class="tc-note">
         <div class="tc-note-header">
-                <span @click="removeNote" class="tc-note-close">
-                    <span class="tc-note-delete">X</span>
-                </span>
+            <span @click="removeNote" class="tc-note-close">
+                <span class="tc-note-delete">X</span>
+            </span>
         </div>
 
         <!--    errors    -->
@@ -60,8 +60,8 @@ export default {
         }
     },
     methods: {
-        async removeNote() {
-            await this.$store.dispatch('removeNote', this.note);
+        removeNote() {
+            this.$store.dispatch('removeNote', this.note);
         },
         titleChanged(event) {
             this.note.title = event.target.innerText
@@ -81,7 +81,8 @@ export default {
 
             if (
                 type === 'content' &&
-                !this.note.content) {
+                !this.note.content
+            ) {
                 this.contentPlaceholder = true;
             }
         },
@@ -102,9 +103,6 @@ export default {
         if (!this.note.content) {
             this.contentPlaceholder = true;
         }
-
-        this.title = this.note.title
-        this.content = this.note.content
     },
 }
 </script>

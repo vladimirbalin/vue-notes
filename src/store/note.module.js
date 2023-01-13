@@ -33,9 +33,7 @@ const actions = {
     async [ADD_NOTE]({state, commit, getters}) {
         const newNote = {title: '', content: '', created_by: getters.getUser.id};
         const url = 'notes';
-        const {data} = await httpService.post(url, newNote);
-
-        const note = data.data;
+        const {data: {data: note}} = await httpService.post(url, newNote);
 
         commit(SET_NOTES, [note, ...state.notes]);
     },
@@ -59,23 +57,21 @@ const actions = {
         }
     },
     async [UPDATE_NOTE]({commit, state}, note) {
-        const notes = state.notes;
-        const indexOf = notes.findIndex(el => el.id === note.id);
-        let updatedNote = notes[indexOf];
+        const indexOf = state.notes.findIndex(el => el.id === note.id);
+        let oldNote = state.notes[indexOf];
 
         try {
             const url = 'notes/' + note.id;
             const {data} = await httpService.put(url, note);
-            updatedNote = data.data;
-            updatedNote.errors = [];
+            oldNote = data.data;
         } catch (e) {
-            updatedNote.errors = e.response.data.errors
+            oldNote = {...oldNote, errors: e.response.data.errors};
         }
 
-        const begin = notes.slice(0, indexOf);
-        const end = notes.slice(indexOf + 1);
+        const begin = state.notes.slice(0, indexOf);
+        const end = state.notes.slice(indexOf + 1);
 
-        commit(SET_NOTES, [...begin, updatedNote, ...end])
+        commit(SET_NOTES, [...begin, oldNote, ...end]);
     }
 }
 const mutations = {
