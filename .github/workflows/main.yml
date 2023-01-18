@@ -6,8 +6,17 @@ on:
       - '*'
 jobs:
   pull_and_build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-      - name: Install requirements
-        run: systemctl stop mysql && git pull && npm install && npm run build && systemctl start mysql
-        working-directory: /var/www/notes/
+      - name: pull and build
+        uses: appleboy/ssh-action@master
+        with:
+          username: root
+          host: 194.58.90.18
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            /root/stophp.sh &&
+            cd ${{ vars.WORKING_DIRECTORY }} &&
+            git pull &&
+            npm run build &&
+            /root/starthp.sh
