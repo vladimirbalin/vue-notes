@@ -1,6 +1,9 @@
 <template>
     <div class="form-wrapper">
         <h3>Login to create notes</h3>
+        <kinescope-player
+            :video-id="202766561"
+        ></kinescope-player>
         <form @submit.prevent="login" action="">
             <div v-if="errors" class="errors">
                 <p v-for="(error, field) in errors" :key="field">
@@ -22,9 +25,12 @@
 
 <script>
 
+import { KinescopePlayer } from '@kinescope/vue-kinescope-player'
 
 export default {
     name: "Login",
+    components: { KinescopePlayer },
+
     data() {
         return {
             form: {
